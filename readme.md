@@ -1,4 +1,4 @@
-# TableEditor.js
+# TableEditor.js 
 
 TableEditor.js is a jQuery-based library designed to provide inline editing functionality for HTML tables, with compatibility with Bootstrap styling. Built on the foundation of https://github.com/markcell/jQuery-Tabledit, TableEditor.js enhances the experience of editing tabular data within web applications.
 
@@ -11,6 +11,8 @@ TableEditor.js is a jQuery-based library designed to provide inline editing func
 - **Event Handling**: Allows developers to specify the event type (e.g., click) for triggering edit actions.
 - **Ajax Integration**: Enables integration with server-side functionality through Ajax requests, facilitating data persistence and updates.
 - **Error Handling**: Includes callbacks for handling success and failure scenarios, providing flexibility in error management.
+
+## Demo [TableEditor.js](https://html-preview.github.io/?url=https://github.com/souravmsh/tableditor/blob/main/index.html)
 
 ## Usage:
 
