@@ -61,10 +61,13 @@ if (typeof jQuery === "undefined") {
 
                     var $td = $table.find('tbody td:nth-child(' + (parseInt(settings.columns.identifier[0]) + 1) + ')');
 
+                    if ($td.length <= 1) {
+                        return false;
+                    }
+                    
                     $td.each(function() {
                         // Create hidden input with row identifier.
                         var input = '<input class="editable-identifier editable-check" type="checkbox" name="' + settings.columns.identifier[1] + '[]" value="' + $(this).closest('tr').data('id') + '" >';
-
                         // Add elements to table cell.
                         $(this).html(input); 
                     });
@@ -501,4 +504,3 @@ if (typeof jQuery === "undefined") {
         return this;
     };
 })(jQuery);
-
