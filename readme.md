@@ -12,7 +12,7 @@ TableEditor.js is a jQuery-based library designed to provide inline editing func
 - **Ajax Integration**: Enables integration with server-side functionality through Ajax requests, facilitating data persistence and updates.
 - **Error Handling**: Includes callbacks for handling success and failure scenarios, providing flexibility in error management.
 
-## Demo [TableEditor.js](https://html-preview.github.io/?url=https://github.com/souravmsh/tableditor/blob/main/index.html)
+## Demo [TableEditor.js](https://html-preview.github.io/?url=http://github.com/souravmsh/tableditor/blob/main/index.html)
 
 ## Usage:
 
