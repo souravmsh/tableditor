@@ -1,5 +1,5 @@
 /**
- * @name TableEditor - v1.0.0
+ * @name TableEditor
  * @description Inline editor for HTML tables compatible with Bootstrap 
  * @author Shohrab Hossain <sourav.diubd@gmail.com>
  * @version 1.0.0
@@ -37,8 +37,7 @@ if (typeof jQuery === "undefined") {
             eventType: "click", 
             columns: {
                 identifier: [0, 'id'],
-                editable: [ 
-                ]
+                editable: []
             }, 
             onSuccess: function() { return; },
             onFail: function() { return; },
@@ -286,26 +285,20 @@ if (typeof jQuery === "undefined") {
             
             var jqXHR = $.post(settings.url, data, function(response, textStatus, jqXHR) {
                 if (action === 'edit') {
-                    // $lastEditedRow.removeClass(settings.dangerClass).addClass(settings.warningClass);
-                    // setTimeout(function() {
-                    //     $table.find('tr.' + settings.dangerClass).removeClass(settings.dangerClass);
-                    // }, 1400);
+                    // 
                 }
                 settings.onSuccess(response, textStatus, jqXHR);
             }, 'json');
 
 
-            // jqXHR.fail(function(jqXHR, textStatus, errorThrown) {
-            //     if (action === 'delete') {
-            //         $lastDeletedRow.removeClass(settings.mutedClass).addClass(settings.dangerClass);
-            //         $lastDeletedRow.find('.tabledit-toolbar button').attr('disabled', false);
-            //         $lastDeletedRow.find('.tabledit-toolbar .tabledit-restore-button').hide();
-            //     } else if (action === 'edit') {
-            //         $lastEditedRow.addClass(settings.dangerClass);
-            //     }
-
-            //     settings.onFail(jqXHR, textStatus, errorThrown);
-            // });
+            jqXHR.fail(function(jqXHR, textStatus, errorThrown) {
+                if (action === 'delete') {
+                    // 
+                } else if (action === 'edit') {
+                    // 
+                }
+                settings.onFail(jqXHR, textStatus, errorThrown);
+            });
 
             jqXHR.always(function() {
                 settings.onAlways();
