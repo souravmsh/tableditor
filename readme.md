@@ -1,6 +1,6 @@
-# TableEditor.js 
+# TablEditor.js 
 
-TableEditor.js is a jQuery-based library designed to provide inline editing functionality for HTML tables, with compatibility with Bootstrap styling. Built on the foundation of https://github.com/markcell/jQuery-Tabledit, TableEditor.js enhances the experience of editing tabular data within web applications.
+TablEditor.js is a jQuery-based library designed to provide inline editing functionality for HTML tables, with compatibility with Bootstrap styling. Built on the foundation of https://github.com/markcell/jQuery-Tabledit, TablEditor.js enhances the experience of editing tabular data within web applications.
 
 ## Features:
 
@@ -12,14 +12,14 @@ TableEditor.js is a jQuery-based library designed to provide inline editing func
 - **Ajax Integration**: Enables integration with server-side functionality through Ajax requests, facilitating data persistence and updates.
 - **Error Handling**: Includes callbacks for handling success and failure scenarios, providing flexibility in error management.
 
-## Demo [TableEditor.js](https://html-preview.github.io/?url=http://github.com/souravmsh/tableditor/blob/main/index.html)
+## Demo [TablEditor.js](https://html-preview.github.io/?url=http://github.com/souravmsh/tableditor/blob/main/index.html)
 
 ## Usage:
 
 1. **Include Dependencies**: Ensure jQuery and Bootstrap are included in the project.
-2. **Include TableEditor.js**: Import TableEditor.js into your HTML file.
-3. **Define HTML Table**: Create an HTML table with appropriate structure and classes for TableEditor.js to target.
-4. **Initialize TableEditor**: Call `TableEditor()` on the target table, passing necessary configuration options.
+2. **Include TablEditor.js**: Import TablEditor.js into your HTML file.
+3. **Define HTML Table**: Create an HTML table with appropriate structure and classes for TablEditor.js to target.
+4. **Initialize TablEditor**: Call `TablEditor()` on the target table, passing necessary configuration options.
 
 ## Configuration Options:
 
@@ -106,7 +106,7 @@ TableEditor.js is a jQuery-based library designed to provide inline editing func
 ```
 
 ```javascript
-$('.tableditor').TableEditor({
+$('.tableditor').TablEditor({
     url: window.location.href,
     inputClass: "form-control input-sm",
     groupClass: "btn-group btn-group-sm",
