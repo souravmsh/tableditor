@@ -120,7 +120,9 @@
                         [7, 'price'],
                     ]
                 }, 
-                onAjax: function(action, data) { return ; },
+                onAjax: function(action, data) {  
+                    console.log('onAjax', action, data);    
+                },
                 onFail: function(jqXHR, textStatus, errorThrown) {
                     console.log('onFail(jqXHR, textStatus, errorThrown)');
                     console.log(jqXHR);
