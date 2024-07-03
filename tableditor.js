@@ -263,7 +263,7 @@ if (typeof jQuery === "undefined") {
                             var $editableSpan = $(td).find('.tableditable-span');
                             if ($editableSpan.length > 0) {
                                 var name  = $editableSpan.data('name');
-                                var value = $editableSpan.text().trim();
+                                var value = $editableSpan.data('value');
                                 item[name] = value;
                             }
                         });
