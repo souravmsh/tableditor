@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Tableditor v1.0.0</title>
+    <title>TablEditor v1.0.0</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
@@ -37,7 +37,7 @@
                     <td><span class="badge bg-info">Processing</span></td>
                     <td>XZ01001</td>
                     <td>ABC</td>
-                    <td>A</td>
+                    <td>Apple</td>
                     <td>10001</td>
                     <td class="qty">10</td>
                     <td class="price">10</td>
@@ -48,7 +48,7 @@
                     <td><span class="badge bg-warning">Pending</span></td>
                     <td>XZ01002</td>
                     <td>XYZ</td>
-                    <td>B</td>
+                    <td>Banana</td>
                     <td>10002</td>
                     <td class="qty">5</td>
                     <td class="price">15</td>
@@ -78,28 +78,28 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="./tableditor.min.js"></script>
+    <script src="./tableditor.js"></script>
     <script> 
         $(document).ready(function() {
             if (typeof jQuery === "undefined") {
-                alert("TableEditor requires jQuery library.");
+                alert("TablEditor requires jQuery library.");
             }
          
             // calculate
             // --------------------------------------------------------
-            $('table.tableditor .qty, table.tableditor .price').on('change keydown', function() {
+            $('table.tableditor .qty, table.tableditor .price').on('change keyup', function() {
                 calculate($(this));
             }); 
         
             function calculate(that) {
-                var tr   = that.closest('tr');
-                var qty    = tr.find('.qty').find('.tableditor-span').text();
-                var price  = tr.find('.price').find('.tableditor-span').text();
+                var tr     = that.closest('tr');
+                var qty    = tr.find('.qty').find('.tableditable-span').text();
+                var price  = tr.find('.price').find('.tableditable-span').text();
                 var value = (parseFloat(qty) * parseFloat(price))
                 tr.find('td.value').text(value)
             }
         
-            $('.tableditor').TableEditor({ 
+            $('.tableditor').TablEditor({ 
                 url       : window.location.href,
                 inputClass: "form-control input-sm",
                 groupClass: "btn-group btn-group-sm",
@@ -114,7 +114,7 @@
                     editable: [
                         [2, 'product_code', '{"XZ01001":"XZ01001","XZ01002":"XZ01002","XZ01003":"XZ01003","XZ01004":"XZ01004","XZ01005":"XZ01005"}'],
                         [3, 'name', '{"ABC":"ABC","DEF":"DEF","MNO":"MNO","XYZ":"XYZ"}'],
-                        [4, 'category', '{"A":"A","B":"B","Z":"Z"}'],
+                        [4, 'category', '{"A":"Apple","B":"Banana","C":"Coconut"}'],
                         [5, 'order_id'],
                         [6, 'quantity'],
                         [7, 'price'],

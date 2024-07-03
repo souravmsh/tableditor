@@ -1,6 +1,6 @@
 # TablEditor.js 
 
-TablEditor.js is a jQuery-based library designed to provide inline editing functionality for HTML tables, with compatibility with Bootstrap styling. Built on the foundation of https://github.com/markcell/jQuery-Tabledit, TablEditor.js enhances the experience of editing tabular data within web applications.
+TablEditor.js is a jQuery-based library designed to provide inline editing functionality for HTML tables, with compatibility with Bootstrap styling. TablEditor.js enhances the experience of editing tabular data within web applications.
 
 ## Features:
 

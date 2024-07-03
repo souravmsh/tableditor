@@ -1,24 +1,23 @@
 /**
- * @name TableEditor
+ * @name TablEditor
  * @description Inline editor for HTML tables compatible with Bootstrap 
  * @author Shohrab Hossain <sourav.diubd@gmail.com>
- * @version 1.0.0
- * @copyright (c) 2024 
- * @inspiredBy https://github.com/markcell/jQuery-Tabledit
+ * @version 1.1.0
+ * @copyright (c) 2024  
  */
 
 
 if (typeof jQuery === "undefined") {
-    throw new Error("TableEditor requires jQuery library.");
+    throw new Error("TablEditor requires jQuery library.");
 }
 
 (function ($) {
     "use strict";
 
-    $.fn.TableEditor = function (options) {
+    $.fn.TablEditor = function (options) {
         if (!this.is("table")) {
             throw new Error(
-                "TableEditor only works when applied to a table."
+                "TablEditor only works when applied to a table."
             );
         }
 
@@ -49,24 +48,24 @@ if (typeof jQuery === "undefined") {
         var $isEditable = false;
 
         /**
-         * Draw TableEditor structure (identifier column, editable columns).
+         * Draw TablEditor structure (identifier column, editable columns).
          *
          * @type {object}
          */
         var Draw = {
             columns: {
                 identifier: function() { 
-                    $table.find('thead th:nth-child(1)').html(`<input type="checkbox" class="editable-check-all" value="all"/>`);
+                    $table.find('thead th:nth-child(1)').html(`<input type="checkbox" class="tableditable-check-all" value="all"/>`);
 
                     var $td = $table.find('tbody td:nth-child(' + (parseInt(settings.columns.identifier[0]) + 1) + ')');
 
-                    if ($td.length <= 1) {
+                    if ($td.length < 0) {
                         return false;
                     }
                     
                     $td.each(function() {
                         // Create hidden input with row identifier.
-                        var input = '<input class="editable-identifier editable-check" type="checkbox" name="' + settings.columns.identifier[1] + '[]" value="' + $(this).closest('tr').data('id') + '" >';
+                        var input = '<input class="editable-identifier tableditable-check" type="checkbox" name="' + settings.columns.identifier[1] + '[]" value="' + $(this).closest('tr').data('id') + '" >';
                         // Add elements to table cell.
                         $(this).html(input); 
                     });
@@ -77,7 +76,7 @@ if (typeof jQuery === "undefined") {
 
                         $td.each(function() {
                             // Get text of this cell.
-                            var text = $(this).text();
+                            var text = $(this).text().trim();
 
                             // Add pointer as cursor.
                             if (!settings.editButton) {
@@ -85,32 +84,40 @@ if (typeof jQuery === "undefined") {
                             }
 
                             // Create span element.
-                            var span = '<span class="editable-span" data-name="' + settings.columns.editable[i][1] + '">' + text + '</span>';
+                            var span = '<span class="tableditable-span" data-name="' + settings.columns.editable[i][1] + '" data-value="'+ text +'">' + text + '</span>';
+                            var input = '<input class="tableditable-input ' + settings.inputClass + '" type="text" name="' + settings.columns.editable[i][1] + '" value="' + text + '" style="max-width:160px;display: none;" disabled>';
+                            var combobox = "";
 
                             // Check if exists the third parameter of editable array.
                             if (typeof settings.columns.editable[i][2] !== 'undefined') {
                                 // Create select element.
-                                var input = '<select class="editable-input ' + settings.inputClass + '" name="' + settings.columns.editable[i][1] + '" style="display: none;" disabled>';
+                                combobox += '<div style="position:relative;display:block;width:100%;">';
+                                combobox += '<ul class="tableditable-combobox" style="max-width:160px;max-height:150px;position:absolute;top:2px;left:0;box-sizing:border-box;border:1px solid #ccc;border-top:none;overflow-y:auto;background-color:white;z-index:1;display:none;margin: 0;padding:0;list-style:none">';
+                                combobox += '<li style="padding:3px 6px;cursor:pointer"><input type="text" class="tableditable-filter ' + settings.inputClass + '" placeholder="Search..." style="width:100%;box-sizing:border-box;padding:3px 6px"></li>';
 
                                 // Create options for select element.
                                 $.each(jQuery.parseJSON(settings.columns.editable[i][2]), function(index, value) {
                                     if (text === value) {
-                                        input += '<option value="' + index + '" selected>' + value + '</option>';
+                                        // overwrite input
+                                        span = '<span class="tableditable-span" data-name="' + settings.columns.editable[i][1] + '"  data-value="'+ index +'">' + value + '</span>';
+                                        input = '<input class="tableditable-input ' + settings.inputClass + '" type="text" name="' + settings.columns.editable[i][1] + '" value="' + value + '" style="max-width:160px;display: none;" disabled readonly>';
+
+                                        combobox += '<li data-value="' + index + '" class="tableditable-li" style="padding:3px 6px;cursor:pointer;background:#e1e1e1" data-selected="true">'+ value +'</li>';
                                     } else {
-                                        input += '<option value="' + index + '">' + value + '</option>';
+                                        combobox += '<li data-value="' + index + '" class="tableditable-li" style="padding:3px 6px;cursor:pointer">'+ value +'</li>';
                                     }
                                 });
 
                                 // Create last piece of select element.
-                                input += '</select>';
+                                combobox += '</ul>';
+                                combobox += '</div>';
                             } else {
-                                // Create text input element.
-                                var input = '<input class="editable-input ' + settings.inputClass + '" type="text" name="' + settings.columns.editable[i][1] + '" value="' + $(this).text() + '" style="display: none;" autocomplete="off" disabled>';
+                                var input = '<input class="tableditable-input ' + settings.inputClass + '" type="text" name="' + settings.columns.editable[i][1] + '" value="' + $(this).text() + '" style="max-width:160px;display: none;" autocomplete="off" disabled>';
                             }
 
                             // Add elements and class "view" to table cell.
-                            $(this).html(span + input);
-                            $(this).addClass('editable-view-mode');
+                            $(this).html(span + input + combobox);
+                            $(this).addClass('tableditable-view-mode');
                         });
                     }
                 } 
@@ -178,27 +185,41 @@ if (typeof jQuery === "undefined") {
                 // Get table row.
                 var $tr = $(td).parent('tr');
                 // Hide and disable input element.
-                $(td).find('.editable-input').blur().hide().prop('disabled', true);
+                $(td).find('.tableditable-input').blur().hide();
+                $(td).find('.tableditable-input').prop('disabled', true);
+                $(td).find('.tableditable-combobox').blur().hide();
                 // Show span element.
-                $(td).find('.editable-span').show();
+                $(td).find('.tableditable-span').show();
                 // Add "view" class and remove "edit" class in td element.
-                $(td).addClass('editable-view-mode').removeClass('editable-edit-mode'); 
+                $(td).addClass('tableditable-view-mode').removeClass('tableditable-edit-mode'); 
             },
             edit: function(td) {
                 // Get table row.
                 var $tr = $(td).parent('tr');
-                // Hide span element.
-                $(td).find('.editable-span').hide();
+
                 // Get input element.
-                var $input = $(td).find('.editable-input');
-                // Enable and show input element.
-                $input.prop('disabled', false).show();
-                // Focus on input element.
-                if (settings.autoFocus) {
-                    $input.focus();
+                var $input = $(td).find('.tableditable-input');
+                if ($input.length) {
+                    // Enable and show input element.
+                    $input.prop('disabled', false).show();
+
+                    // Focus on input element.
+                    if (settings.autoFocus) {
+                        $input.focus();
+                    }
+
+                    // Hide span element.
+                    $(td).find('.tableditable-span').hide();
                 }
+
+                var $combobox = $(td).find('.tableditable-combobox');
+                if ($combobox.length) {
+                    $combobox.show();
+                    // $combobox.find('.tableditable-filter').focus();
+                }
+
                 // Add "edit" class and remove "view" class in td element.
-                $(td).addClass('editable-edit-mode').removeClass('editable-view-mode'); 
+                $(td).addClass('tableditable-edit-mode').removeClass('tableditable-view-mode'); 
             }
         };
 
@@ -211,16 +232,14 @@ if (typeof jQuery === "undefined") {
             reset: function(td) {
                 $(td).each(function() {
                     // Get input element.
-                    var $input = $(this).find('.editable-input');
-                    // Get span text.
-                    var text = $(this).find('.editable-span').text();
-                    // Set input/select value with span text.
-                    if ($input.is('select')) {
-                        $input.find('option').filter(function() {
-                            return $.trim($(this).text()) === text;
-                        }).attr('selected', true);
-                    } else {
-                        $input.val(text);
+                    var $text   = $(this).find('.tableditable-span').text(); 
+                    var $input  = $(this).find('.tableditable-input');
+                    var $combobox = $(this).find('.tableditable-combobox');
+
+                    if ($combobox.is('ul')) {
+                        $(this).find('input').not('input.tableditable-filter').val($text.trim());
+                    } else if ($input.is("input")) {
+                        $input.val($text.trim());
                     }
                     // Change to view mode.
                     Mode.view(this);
@@ -230,18 +249,18 @@ if (typeof jQuery === "undefined") {
 
                 var $data = [];
                 if (action == 'delete') {
-                    $table.find('.editable-check:checked').each(function() {
+                    $table.find('.tableditable-check:checked').each(function() {
                         var item = {};
                         item[settings.columns.identifier[1]] = $(this).val();
                         $data.push(item);
                     }); 
                 } else if (action == 'edit') {
-                    $table.find('.editable-check:checked:disabled').each(function() {
+                    $table.find('.tableditable-check:checked:disabled').each(function() {
                         var $row = $(this).closest('tr');
                         var item = {};
                         item[settings.columns.identifier[1]] = $(this).val();
                         $row.find('td').each(function(i, td) {
-                            var $editableSpan = $(td).find('.editable-span');
+                            var $editableSpan = $(td).find('.tableditable-span');
                             if ($editableSpan.length > 0) {
                                 var name  = $editableSpan.data('name');
                                 var value = $editableSpan.text().trim();
@@ -312,38 +331,17 @@ if (typeof jQuery === "undefined") {
          *
          * @param {object} event
          */
-        $table.on(settings.eventType, 'td.editable-view-mode', function(event) {
+        $table.on(settings.eventType, 'td.tableditable-view-mode', function(event) {
             if (event.handled !== true) {
                 event.preventDefault();
-
                 // Reset all td's in edit mode.
-                Form.reset($table.find('td.editable-edit-mode'));
-
+                Form.reset($table.find('td.tableditable-edit-mode'));
                 // Change to edit mode.
                 Mode.edit(this);
-
                 event.handled = true;
             }
         });
 
-        /**
-         * Change event when input is a select element.
-         */
-        $table.on('change', 'select.editable-input:visible', function(event) {
-            if (event.handled !== true) {
-                // update the column.
-                var $td = $(this).parent('td'); 
-                event.handled = true;
-
-                // set the value of input element
-                $td.find('.editable-input').val(event.target.value);
-                $td.find('.editable-span').text(event.target.value); 
-                $td.closest('tr').addClass(settings.dangerClass);
-                $td.closest('tr').find('input.editable-check').prop('checked', true).prop('disabled', true);
-                $isEditable = true;
-                Buttons.edit();
-            }
-        });
 
         /**
          * Click event on document element.
@@ -351,11 +349,12 @@ if (typeof jQuery === "undefined") {
          * @param {object} event
          */
         $(document).on('click', function(event) {
-            var $editMode = $table.find('.editable-edit-mode');
+            var $editMode = $table.find('.tableditable-edit-mode');
             // Reset visible edit mode column.
             if (!$editMode.is(event.target) && $editMode.has(event.target).length === 0) {
-                Form.reset($table.find('.editable-input:visible').parent('td'));
-            }
+                Form.reset($editMode.parent('td'));
+                Form.reset($table.find('.tableditable-input:visible').parent('td'));
+            }  
         });
 
         /**
@@ -364,39 +363,86 @@ if (typeof jQuery === "undefined") {
          * @param {object} event
          */
         $table.on('keyup', function(event) {
-            // Get input element with focus or confirmation button.
-            var $input = $table.find('.editable-input:visible');
-            var $button = $table.find('.editable-confirm-button');
 
-            if ($input.length > 0) {
-                var $td = $input.parents('td');
-            } else if ($button.length > 0) {
-                var $td = $button.parents('td');
-            } else {
-                return;
-            }
+            $isEditable = true;
+            var $td = $(event.target).closest('td');
+            var $combobox = $td.find('.tableditable-combobox');
 
             // set the value of input element
-            $td.find('.editable-input').val(event.target.value);
-            $td.find('.editable-span').text(event.target.value); 
+            if (!$combobox.length) {
+                $td.find('.tableditable-input').val((event.target.value).trim());
+                $td.find('.tableditable-span').text((event.target.value).trim());
+                $td.find('.tableditable-span').attr("data-value", (event.target.value).trim());
+            }
+
             $td.closest('tr').addClass(settings.dangerClass);
-            $td.closest('tr').find('input.editable-check').prop('checked', true).prop('disabled', true);
-            $isEditable = true;
+            $td.closest('tr').find('input.tableditable-check').prop('checked', true).prop('disabled', true);
             Buttons.edit();
 
             // Key?
             switch (event.keyCode) {
-                case 9:  // Tab.
-                    Mode.edit($td.closest('td').next());
-                    break;
+                case 9:  // Tab. 
+                    Mode.view($td);
+                    Mode.edit($td.next());
+                    break; 
                 case 27: // Escape.
                     Form.reset($td);
                     break;
             }
         });
 
+        
+        /**
+         * Change event when input is a combobox element.
+         */
+        $table.on('keyup', 'ul.tableditable-combobox input.tableditable-filter', function() {
+            const filter = $(this).val().toLowerCase();
+            const listItems = $(this).closest('ul.tableditable-combobox').find('li.tableditable-li');
+            listItems.each(function() {
+                if ($(this).text().toLowerCase().indexOf(filter) > -1) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+        
+        $table.on('click', 'ul.tableditable-combobox li.tableditable-li', function(event) {
+            
+            event.stopPropagation();
+
+            if (event.handled !== true) {
+                // set the value of input element
+                event.handled = true;
+
+                $(this).closest("ul").find("li").css("background","")
+
+                // update the column.
+                var $td = $(this).closest('td'); 
+                var $text = $(this).text();
+                var $value = $(this).data("value");
+                $(this).css({'background':'#e1e1e1'})
+                $td.find('.tableditable-span').text($text); 
+                $td.find('.tableditable-span').attr("data-value", $value); 
+                $td.find('input').not('input.tableditable-filter').val($text.trim());
+
+                $td.closest('tr').addClass(settings.dangerClass);
+                $td.closest('tr').find('input.tableditable-check').prop('checked', true).prop('disabled', true);
+
+                // reset filter
+                $(this).closest('ul').find('input.tableditable-filter').val('');
+                $(this).closest('ul').find('li').show();
+
+                $isEditable = true;
+                Mode.view($td);
+                Buttons.edit();
+            }
+        });
 
         /**
+         * -------------------------------------------------------------------
+         * EXTERNAL 
+         * -------------------------------------------------------------------
          * Buttons
          * 
          * @param {object} event
@@ -411,11 +457,11 @@ if (typeof jQuery === "undefined") {
                 if (!$isEditable) {
                     return ;
                 }
-                var checked = $table.find('input.editable-check:checked').length;
+                var checked = $table.find('input.tableditable-check:checked').length;
                 this.updateButton(settings.editBtnClass, `Update ${checked} Items`, checked);
             },
             delete: function() {
-                var checked = $table.find('input.editable-check:checked').length;
+                var checked = $table.find('input.tableditable-check:checked').length;
                 this.updateButton(settings.deleteBtnClass, `Delete ${checked} Items`, checked);
             },
             updateButton: function(btnClass, btnText, count) {
@@ -459,8 +505,8 @@ if (typeof jQuery === "undefined") {
          * 
          * @param {object} event
          */ 
-        var checkAll = $table.find('input.editable-check-all');
-        var checkboxes = $table.find('input.editable-check');
+        var checkAll = $table.find('input.tableditable-check-all');
+        var checkboxes = $table.find('input.tableditable-check');
         checkAll.on('change', function() {
             checkboxes.not(':disabled').prop('checked', $(this).prop('checked'));
             // update button
