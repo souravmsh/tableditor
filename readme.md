@@ -12,7 +12,7 @@ TablEditor.js is a jQuery-based library designed to provide inline editing funct
 - **Ajax Integration**: Enables integration with server-side functionality through Ajax requests, facilitating data persistence and updates.
 - **Error Handling**: Includes callbacks for handling success and failure scenarios, providing flexibility in error management.
 
-## Demo [TablEditor.js](https://html-preview.github.io/?url=http://github.com/souravmsh/tableditor/blob/main/index.html)
+## Demo [TablEditor.js](https://souravmsh.github.io/tableditor)
 
 ## Usage:
 
