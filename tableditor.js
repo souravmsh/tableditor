@@ -34,6 +34,7 @@ if (typeof jQuery === "undefined") {
             editBtnClass: "",
             refreshBtnClass: "",
             eventType: "click", 
+            autoFocus: true,
             columns: {
                 identifier: [0, 'id'],
                 editable: []
