@@ -61,7 +61,7 @@ TablEditor.js is a jQuery-based library designed to provide inline editing funct
         </tr>
     </thead>
     <tbody>
-        <tr data-id="1">
+        <tr data-id="1" class="lock" title="This row is not editable">
             <td></td>
             <td><span class="badge bg-info">Processing</span></td>
             <td>XZ01001</td>
