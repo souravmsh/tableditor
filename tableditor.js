@@ -58,7 +58,7 @@ if (typeof jQuery === "undefined") {
                 identifier: function() { 
                     $table.find('thead th:nth-child(1)').html(`<input type="checkbox" class="tableditable-check-all" value="all"/>`);
 
-                    var $td = $table.find('tbody td:nth-child(' + (parseInt(settings.columns.identifier[0]) + 1) + ')');
+                    var $td = $table.find('tbody tr:not(.lock) td:nth-child(' + (parseInt(settings.columns.identifier[0]) + 1) + ')');
 
                     if ($td.length < 0) {
                         return false;
@@ -73,7 +73,7 @@ if (typeof jQuery === "undefined") {
                 },
                 editable: function() {
                     for (var i = 0; i < settings.columns.editable.length; i++) {
-                        var $td = $table.find('tbody td:nth-child(' + (parseInt(settings.columns.editable[i][0]) + 1) + ')');
+                        var $td = $table.find('tbody tr:not(.lock) td:nth-child(' + (parseInt(settings.columns.editable[i][0]) + 1) + ')');
 
                         $td.each(function() {
                             // Get text of this cell.
